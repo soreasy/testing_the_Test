@@ -7,7 +7,7 @@ class DoctorController < ApplicationController
   end
 
   def get_comments
-    doc = Doctor.find(params[:id])
+    doc = Doctor.find_by(id: params[:id])
     if doc
       # return all comments on them
       all_comments = doc.comments
@@ -21,41 +21,50 @@ class DoctorController < ApplicationController
   end
 
   def add_comment
-    doc_to_comment_on = Doctor.find(params[:id])
-    puts "adding_comment"
+    doc_to_comment_on = Doctor.find_by(id: params[:id])
     if doc_to_comment_on
-      puts "got doc"
       if params[:comment]
-        puts "got param"
         doc_to_comment_on.comments << Comment.create(active: true, content: params[:comment])
-        puts "added comment"
         render :json => "added your comment!".to_json
       else
-        puts "no comment param"
-        render :json => "please provide a comment".to_json
+        render :json => "please provide a 'comment' param".to_json
       end
     else
-      puts "no doc with that id"
       # return no doctor with that id message
       render :json => "no doctor with provided id #{params[:id]}".to_json
     end
   end
 
   def delete_comment
-    comment_to_delete = Comment.find(params[:comment_id])
+    comment_to_delete = Comment.find_by(id: params[:comment_id])
     if comment_to_delete
       comment_to_delete.destroy
       render :json => "deleted the comment!".to_json
     else
+      puts "no comment to delete here"
       render :json => "no comment with id #{params[:comment_id]}".to_json
     end
   end
 
   def switch_active
-    comment_to_switch = Comment.find(params[:comment_id])
+    comment_to_switch = Comment.find_by(id: params[:comment_id])
     if comment_to_switch
       comment_to_switch.update(active: !comment_to_switch.active)
       render :json => "comment with id #{params[:comment_id]} is now #{comment_to_switch.active ? 'active' : 'inactive'}".to_json
+    else
+      render :json => "no comment with id #{params[:comment_id]}".to_json
+    end
+  end
+
+  def update_comment
+    comment_to_update = Comment.find_by(id: params[:comment_id])
+    if comment_to_update
+      if params[:new_text]
+        comment_to_update.update(content: params[:new_text])
+        render :json => "updated the comment!".to_json
+      else
+        render :json => "please provide a 'new_text' param".to_json
+      end
     else
       render :json => "no comment with id #{params[:comment_id]}".to_json
     end

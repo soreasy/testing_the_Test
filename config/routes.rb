@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   # SWITCH ACTIVE STATUS OF A COMMENT
   post '/doctors/:id/comments/:comment_id/switch_active', to: 'doctor#switch_active'
 
+  post '/doctors/:id/comments/:comment_id/update', to: 'doctor#update_comment'
 
 end
