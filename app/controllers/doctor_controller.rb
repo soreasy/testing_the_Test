@@ -1,5 +1,7 @@
 class DoctorController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   def index
     render :json => Doctor.all.to_json
   end
@@ -20,14 +22,20 @@ class DoctorController < ApplicationController
 
   def add_comment
     doc_to_comment_on = Doctor.find(params[:id])
+    puts "adding_comment"
     if doc_to_comment_on
+      puts "got doc"
       if params[:comment]
+        puts "got param"
         doc_to_comment_on.comments << Comment.create(active: true, content: params[:comment])
+        puts "added comment"
         render :json => "added your comment!".to_json
       else
+        puts "no comment param"
         render :json => "please provide a comment".to_json
       end
     else
+      puts "no doc with that id"
       # return no doctor with that id message
       render :json => "no doctor with provided id #{params[:id]}".to_json
     end
