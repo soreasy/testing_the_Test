@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   root 'doctor#index'
 
   get '/doctors/:id/comments', to: 'doctor#get_comments'
-  post '/doctors/:id/comments', to: 'doctor#get_comments'
-
+  post '/doctors/:id/comments', to: 'doctor#add_comment'
+  post '/doctors/:id/comments/:comment_id/destroy', to: 'doctor#delete_comment'
+  post '/doctors/:id/comments/:comment_id/switch_active', to: 'doctor#switch_active'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
