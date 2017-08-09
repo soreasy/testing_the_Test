@@ -15,6 +15,13 @@ Rails.application.routes.draw do
   # SWITCH ACTIVE STATUS OF A COMMENT
   post '/doctors/:id/comments/:comment_id/switch_active', to: 'doctor#switch_active'
 
+  # UPDATE A COMMENT
   post '/doctors/:id/comments/:comment_id/update', to: 'doctor#update_comment'
+
+  # GET COMMENTS AWAITING APPROVAL
+  get '/users/:id/approval_queue', to: 'user#check_approval_queue'
+
+  # APPROVE COMMENTS - TAKES A COMMA-SEPARATED LIST OF COMMENT ID'S TO APPROVE
+  post '/users/:id/approve', to: 'user#approve_comments'
 
 end
