@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20170809172708) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: true do |t|
     t.boolean  "active"
     t.text     "content"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170809172708) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["doctor_id"], name: "index_comments_on_doctor_id"
+  add_index "comments", ["doctor_id"], name: "index_comments_on_doctor_id", using: :btree
 
   create_table "doctors", force: true do |t|
     t.string   "name"
