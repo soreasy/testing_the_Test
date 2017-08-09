@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  active: false
+  content: MyText
+  doctor_id: 
+  approved: false
+
+two:
+  active: false
+  content: MyText
+  doctor_id: 
+  approved: false
